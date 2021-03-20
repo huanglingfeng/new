@@ -1,0 +1,42 @@
+and
+andi
+or
+ori
+xor
+xori
+nor
+lui
+    sll
+    sllv
+    sra
+    srav
+    srl
+    srlv
+nop
+ssnop
+sync/pref
+    movn
+    movz
+    mfhi
+    mthi
+    mflo
+    mtlo
+add
+addi
+addiu
+addu
+sub
+subu
+clo
+clz
+slt
+slti
+sltiu
+sltu
+mul
+mult
+multu
+    madd
+    maddu
+    musb
+    musbu
