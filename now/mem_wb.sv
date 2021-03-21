@@ -1,28 +1,26 @@
-`include "defines.svh"
+`include"defines.svh"
 
 module mem_wb(
 
 	input	logic										clk,
 	input logic										rst,
-
-  //来自控制模块的信息
-	input logic[5:0]               stall,	
+	
+	input logic[5:0]		stall,
 
 	//来自访存阶段的信息	
-	input logic[`RegAddrBus]       mem_wd,
+	input RegAddr_t       mem_wd,
 	input logic                    mem_wreg,
-	input logic[`RegBus]					 mem_wdata,
-	input logic[`RegBus]           mem_hi,
-	input logic[`RegBus]           mem_lo,
+	input Reg_t					 mem_wdata,
+	input Reg_t           mem_hi,
+	input Reg_t           mem_lo,
 	input logic                    mem_whilo,	
-
 	//送到回写阶段的信息
-	output logic[`RegAddrBus]      wb_wd,
+	output RegAddr_t      wb_wd,
 	output logic                   wb_wreg,
-	output logic[`RegBus]					 wb_wdata,
-	output logic[`RegBus]          wb_hi,
-	output logic[`RegBus]          wb_lo,
-	output logic                   wb_whilo		       
+	output Reg_t					 wb_wdata,
+	output Reg_t          wb_hi,
+	output Reg_t          wb_lo,
+	output logic                   wb_whilo
 	
 );
 
@@ -31,7 +29,7 @@ module mem_wb(
 		if(rst == `RstEnable) begin
 			wb_wd <= `NOPRegAddr;
 			wb_wreg <= `WriteDisable;
-		  wb_wdata <= `ZeroWord;	
+		  wb_wdata <= `ZeroWord;
 		  wb_hi <= `ZeroWord;
 		  wb_lo <= `ZeroWord;
 		  wb_whilo <= `WriteDisable;	

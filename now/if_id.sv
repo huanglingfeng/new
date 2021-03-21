@@ -1,17 +1,17 @@
-`include "defines.svh"
+
+`include"defines.svh"
 
 module if_id(
 
 	input	logic										clk,
 	input logic										rst,
+	
+	input logic[5:0]		stall,
 
-	//来自控制模块的信息
-	input logic[5:0]               stall,	
-
-	input logic[`InstAddrBus]			if_pc,
-	input logic[`InstBus]          if_inst,
-	output logic[`InstAddrBus]      id_pc,
-	output logic[`InstBus]          id_inst  
+	input InstAddr_t			if_pc,
+	input Inst_t          if_inst,
+	output InstAddr_t      id_pc,
+	output Inst_t          id_inst  
 	
 );
 
@@ -19,7 +19,7 @@ module if_id(
 		if (rst == `RstEnable) begin
 			id_pc <= `ZeroWord;
 			id_inst <= `ZeroWord;
-		end else if(stall[1] == `Stop && stall[2] == `NoStop) begin
+	  end else if(stall[1] == `Stop && stall[2] == `NoStop) begin
 			id_pc <= `ZeroWord;
 			id_inst <= `ZeroWord;	
 	  end else if(stall[1] == `NoStop) begin

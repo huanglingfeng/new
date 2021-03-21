@@ -1,97 +1,80 @@
-`include "defines.svh"
+
+`include"defines.svh"
 
 module ex(
 
 	input logic										rst,
 	
 	//送到执行阶段的信息
-	input logic[`AluOpBus]         aluop_i,
-	input logic[`AluSelBus]        alusel_i,
-	input logic[`RegBus]           reg1_i,
-	input logic[`RegBus]           reg2_i,
-	input logic[`RegAddrBus]       wd_i,
+	input AluOp_t         aluop_i,
+	input AluSel_t        alusel_i,
+	input Reg_t           reg1_i,
+	input Reg_t           reg2_i,
+	input RegAddr_t       wd_i,
 	input logic                    wreg_i,
-	input logic[`RegBus]           inst_i,
-	
+
 	//HI、LO寄存器的值
-	input logic[`RegBus]           hi_i,
-	input logic[`RegBus]           lo_i,
+	input Reg_t           hi_i,
+	input Reg_t           lo_i,
 
 	//回写阶段的指令是否要写HI、LO，用于检测HI、LO的数据相关
-	input logic[`RegBus]           wb_hi_i,
-	input logic[`RegBus]           wb_lo_i,
+	input Reg_t           wb_hi_i,
+	input Reg_t           wb_lo_i,
 	input logic                    wb_whilo_i,
 	
 	//访存阶段的指令是否要写HI、LO，用于检测HI、LO的数据相关
-	input logic[`RegBus]           mem_hi_i,
-	input logic[`RegBus]           mem_lo_i,
+	input Reg_t           mem_hi_i,
+	input Reg_t           mem_lo_i,
 	input logic                    mem_whilo_i,
 
-	input logic[`DoubleRegBus]     hilo_temp_i,
+	input DoubleReg_t     hilo_temp_i,
 	input logic[1:0]               cnt_i,
 
 	//与除法模块相连
-	input logic[`DoubleRegBus]     div_result_i,
+	input DoubleReg_t    div_result_i,
 	input logic                    div_ready_i,
 
-	//是否转移、以及link address
-	input logic[`RegBus]           link_address_i,
-	input logic                    is_in_delayslot_i,	
-	
-	output logic[`RegAddrBus]       wd_o,
+	output RegAddr_t       wd_o,
 	output logic                    wreg_o,
-	output logic[`RegBus]						wdata_o,
-
-	output logic[`RegBus]           hi_o,
-	output logic[`RegBus]           lo_o,
-	output logic                    whilo_o,
+	output Reg_t						wdata_o,
 	
-	output logic[`DoubleRegBus]     hilo_temp_o,
+	output Reg_t           hi_o,
+	output Reg_t           lo_o,
+	output logic                    whilo_o,
+
+	output DoubleReg_t         hilo_temp_o,
 	output logic[1:0]               cnt_o,
 
-	output logic[`RegBus]           div_opdata1_o,
-	output logic[`RegBus]           div_opdata2_o,
+	output Reg_t          div_opdata1_o,
+	output Reg_t          div_opdata2_o,
 	output logic                    div_start_o,
 	output logic                    signed_div_o,
 
-	//下面新增的几个输出是为加载、存储指令准备的
-	output logic[`AluOpBus]        aluop_o,
-	output logic[`RegBus]          mem_addr_o,
-	output logic[`RegBus]          reg2_o,
 
-	output logic										stallreq       			
-	
+	output logic 			stallreq
 );
 
-	logic[`RegBus] logicout;
-	logic[`RegBus] shiftres;
-	logic[`RegBus] moveres;
-	logic[`RegBus] arithmeticres;
-	logic[`DoubleRegBus] mulres;	
-	logic[`RegBus] HI;
-	logic[`RegBus] LO;
-	logic[`RegBus] reg2_i_mux;
-	logic[`RegBus] reg1_i_not;	
-	logic[`RegBus] result_sum;
+	Reg_t logicout;
+	Reg_t shiftres;
+	Reg_t moveres;
+	Reg_t arithmeticres;
+	Reg_t HI;
+	Reg_t LO;
+
+	Reg_t reg2_i_mux;
+	Reg_t reg1_i_not;	
+	Reg_t result_sum;
 	logic ov_sum;
 	logic reg1_eq_reg2;
 	logic reg1_lt_reg2;
-	logic[`RegBus] opdata1_mult;
-	logic[`RegBus] opdata2_mult;
-	logic[`DoubleRegBus] hilo_temp;
-	logic[`DoubleRegBus] hilo_temp1;
-	logic stallreq_for_madd_msub;			
+	Reg_t opdata1_mult;
+	Reg_t opdata2_mult;
+	DoubleReg_t hilo_temp;	
+	DoubleReg_t mulres;
+	DoubleReg_t hilo_temp1;
+	logic stallreq_for_madd_msub;
 	logic stallreq_for_div;
 
-  //aluop_o传递到访存阶段，用于加载、存储指令
-  assign aluop_o = aluop_i;
-  
-  //mem_addr传递到访存阶段，是加载、存储指令对应的存储器地址
-  assign mem_addr_o = reg1_i + {{16{inst_i[15]}},inst_i[15:0]};
-
-  //将两个操作数也传递到访存阶段，也是为记载、存储指令准备的
-  assign reg2_o = reg2_i;
-			
 	always_comb begin
 		if(rst == `RstEnable) begin
 			logicout <= `ZeroWord;
@@ -288,7 +271,7 @@ module ex(
 		end
 	end	
 
-  //DIV、DIVU指令	
+	  //DIV、DIVU指令	
 	always_comb begin
 		if(rst == `RstEnable) begin
 			stallreq_for_div <= `NoStop;
@@ -402,9 +385,6 @@ module ex(
 	 	`EXE_RES_MUL:		begin
 	 		wdata_o <= mulres[31:0];
 	 	end	 	
-	 	`EXE_RES_JUMP_BRANCH:	begin
-	 		wdata_o <= link_address_i;
-	 	end	 	
 	 	default:					begin
 	 		wdata_o <= `ZeroWord;
 	 	end
@@ -427,7 +407,7 @@ module ex(
 		end else if((aluop_i == `EXE_MSUB_OP) || (aluop_i == `EXE_MSUBU_OP)) begin
 			whilo_o <= `WriteEnable;
 			hi_o <= hilo_temp1[63:32];
-			lo_o <= hilo_temp1[31:0];		
+			lo_o <= hilo_temp1[31:0];			
 		end else if((aluop_i == `EXE_DIV_OP) || (aluop_i == `EXE_DIVU_OP)) begin
 			whilo_o <= `WriteEnable;
 			hi_o <= div_result_i[63:32];

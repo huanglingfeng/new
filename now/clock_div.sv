@@ -12,14 +12,14 @@ module clock_div(clk_sys,clk,clk_8);/*·ÖÆµÆ÷£¬½«Ò»
     logic [31:0] div_counter_8=0; 
 
     always @(posedge clk_sys) begin
-        if (div_counter > 10) begin 
+        if (div_counter > 5000) begin 
         clk <= ~clk;
         div_counter <= 0;
         div_counter_8<=div_counter_8+1;
     end else begin
         div_counter <= div_counter+1;
     end
-    if(div_counter_8==10)
+    if(div_counter_8==20000)
     begin
         clk_8<=~clk_8;
         div_counter_8<=0;

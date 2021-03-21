@@ -7,22 +7,22 @@ module regfile(
 	
 	//Ð´¶Ë¿Ú
 	input logic										we,
-	input logic[`RegAddrBus]				waddr,
-	input logic[`RegBus]						wdata,
+	input RegAddr_t				waddr,
+	input Reg_t						wdata,
 	
 	//¶Á¶Ë¿Ú1
 	input logic										re1,
-	input logic[`RegAddrBus]			  raddr1,
-	output logic[`RegBus]           rdata1,
+	input RegAddr_t			  raddr1,
+	output Reg_t           rdata1,
 	
 	//¶Á¶Ë¿Ú2
 	input logic										re2,
-	input logic[`RegAddrBus]			  raddr2,
-	output logic[`RegBus]           rdata2
+	input RegAddr_t			  raddr2,
+	output Reg_t           rdata2
 	
 );
 
-	logic[`RegBus]  regs[0:`RegNum-1];
+	Reg_t  regs[0:`RegNum-1];
 
 	always @ (posedge clk) begin
 		if (rst == `RstDisable) begin

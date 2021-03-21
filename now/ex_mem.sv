@@ -1,46 +1,34 @@
-`include "defines.svh"
+`include"defines.svh"
 
 module ex_mem(
 
 	input	logic										clk,
 	input logic										rst,
-
-	//来自控制模块的信息
-	input logic[5:0]							 stall,	
 	
+	input logic[5:0]			stall,
+
 	//来自执行阶段的信息	
-	input logic[`RegAddrBus]       ex_wd,
+	input RegAddr_t       ex_wd,
 	input logic                    ex_wreg,
-	input logic[`RegBus]					 ex_wdata, 	
-	input logic[`RegBus]           ex_hi,
-	input logic[`RegBus]           ex_lo,
+	input Reg_t					 ex_wdata, 	
+	input Reg_t           ex_hi,
+	input Reg_t           ex_lo,
 	input logic                    ex_whilo, 	
 
-  //为实现加载、访存指令而添加
-  input logic[`AluOpBus]        ex_aluop,
-	input logic[`RegBus]          ex_mem_addr,
-	input logic[`RegBus]          ex_reg2,
+	input DoubleReg_t		      hilo_i,	
+	input logic[1:0]               cnt_i,
 
-	input logic[`DoubleRegBus]     hilo_i,	
-	input logic[1:0]               cnt_i,	
-	
 	//送到访存阶段的信息
-	output logic[`RegAddrBus]      mem_wd,
+	output RegAddr_t      mem_wd,
 	output logic                   mem_wreg,
-	output logic[`RegBus]					 mem_wdata,
-	output logic[`RegBus]          mem_hi,
-	output logic[`RegBus]          mem_lo,
+	output Reg_t					 mem_wdata,
+	
+	output Reg_t          mem_hi,
+	output Reg_t          mem_lo,
 	output logic                   mem_whilo,
 
-  //为实现加载、访存指令而添加
-  output logic[`AluOpBus]        mem_aluop,
-	output logic[`RegBus]          mem_mem_addr,
-	output logic[`RegBus]          mem_reg2,
-		
-	output logic[`DoubleRegBus]    hilo_o,
-	output logic[1:0]              cnt_o	
-	
-	
+	output DoubleReg_t		      hilo_o,	
+	output logic[1:0]               cnt_o
 );
 
 
@@ -51,12 +39,9 @@ module ex_mem(
 		  mem_wdata <= `ZeroWord;	
 		  mem_hi <= `ZeroWord;
 		  mem_lo <= `ZeroWord;
-		  mem_whilo <= `WriteDisable;		
-	    hilo_o <= {`ZeroWord, `ZeroWord};
+		  mem_whilo <= `WriteDisable;
+		 hilo_o <= {`ZeroWord, `ZeroWord};
 			cnt_o <= 2'b00;	
-  		mem_aluop <= `EXE_NOP_OP;
-			mem_mem_addr <= `ZeroWord;
-			mem_reg2 <= `ZeroWord;			
 		end else if(stall[3] == `Stop && stall[4] == `NoStop) begin
 			mem_wd <= `NOPRegAddr;
 			mem_wreg <= `WriteDisable;
@@ -65,10 +50,7 @@ module ex_mem(
 		  mem_lo <= `ZeroWord;
 		  mem_whilo <= `WriteDisable;
 	    hilo_o <= hilo_i;
-			cnt_o <= cnt_i;	
-  		mem_aluop <= `EXE_NOP_OP;
-			mem_mem_addr <= `ZeroWord;
-			mem_reg2 <= `ZeroWord;						  				    
+			cnt_o <= cnt_i;			  				    
 		end else if(stall[3] == `NoStop) begin
 			mem_wd <= ex_wd;
 			mem_wreg <= ex_wreg;
@@ -78,9 +60,6 @@ module ex_mem(
 			mem_whilo <= ex_whilo;	
 	    hilo_o <= {`ZeroWord, `ZeroWord};
 			cnt_o <= 2'b00;	
-  		mem_aluop <= ex_aluop;
-			mem_mem_addr <= ex_mem_addr;
-			mem_reg2 <= ex_reg2;			
 		end else begin
 	    hilo_o <= hilo_i;
 			cnt_o <= cnt_i;											

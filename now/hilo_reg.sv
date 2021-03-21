@@ -2,17 +2,17 @@
 
 module hilo_reg(
 
-	input	logic										clk,
+	input logic										clk,
 	input logic										rst,
 	
 	//Ð´¶Ë¿Ú
 	input logic										we,
-	input logic[`RegBus]				    hi_i,
-	input logic[`RegBus]						lo_i,
+	input Reg_t				    hi_i,
+	input Reg_t						lo_i,
 	
 	//¶Á¶Ë¿Ú1
-	output logic[`RegBus]           hi_o,
-	output logic[`RegBus]           lo_o
+	output Reg_t           hi_o,
+	output Reg_t           lo_o
 	
 );
 

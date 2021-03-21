@@ -1,15 +1,16 @@
-`include "defines.svh"
+
+`include"defines.svh"
 
 module inst_rom(
 
 //	input	logic										clk,
-	input logic										ce,
-	input logic[`InstAddrBus]			addr,
-	output logic[`InstBus]					inst
+	input logic                    ce,
+	input InstAddr_t			addr,
+	output Inst_t					inst
 	
 );
 
-	logic[`InstBus]  inst_mem[0:`InstMemNum-1];
+	Inst_t  inst_mem[0:`InstMemNum-1];
 
 	initial $readmemh ( "inst_rom.data", inst_mem );
 

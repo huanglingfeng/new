@@ -10,8 +10,6 @@ module ctrl(
 	output logic[5:0]              stall       
 	
 );
-
-
 	always_comb begin
 		if(rst == `RstEnable) begin
 			stall <= 6'b000000;

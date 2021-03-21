@@ -1,4 +1,4 @@
-`include "defines.svh"
+`include"defines.svh"
 `timescale 1ns/1ps
 
 module openmips_min_sopc_tb();
@@ -15,15 +15,13 @@ module openmips_min_sopc_tb();
       
   initial begin
     rst = `RstEnable;
-    #195ns rst= `RstDisable;
-    #4000ns $stop;
+    #195 rst= `RstDisable;
+    #4100 $stop;
   end
        
   openmips_min_sopc openmips_min_sopc0(
 		.clk(CLOCK_50),
-		.rst(rst),
-    .D(D),
-    .o(o)
+		.rst(rst)	
 	);
 
 endmodule
