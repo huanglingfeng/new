@@ -18,14 +18,14 @@ module openmips_min_sopc(
   logic[`RegBus] mem_data_o;
   logic[3:0] mem_sel_i;  
   logic mem_ce_i;  
-  logic[`RegBus] .D(out;
-  logic [63:0] .Y(led_anode_out;
+  logic[`RegBus] out;
+  logic [63:0] led_anode_out;
 clock_div clk_d(.clk_sys(clk),.clk(clk2),.clk_8(clk1));
  openmips openmips0(
 		.clk(clk2),
 		.rst(rst),
 
-		..D(out(.D(out),
+		.D(out),
 		.rom_addr_o(inst_addr),
 		.rom_data_i(inst),
 		.rom_ce_o(rom_ce),
