@@ -5,7 +5,8 @@ module openmips_min_sopc_tb();
 
   logic     CLOCK_50;
   logic     rst;
-  
+  logic [7:0] D;
+  logic [7:0] o;
        
   initial begin
     CLOCK_50 = 1'b0;
@@ -14,13 +15,15 @@ module openmips_min_sopc_tb();
       
   initial begin
     rst = `RstEnable;
-    #195 rst= `RstDisable;
-    #4100 $stop;
+    #195ns rst= `RstDisable;
+    #4000ns $stop;
   end
        
   openmips_min_sopc openmips_min_sopc0(
 		.clk(CLOCK_50),
-		.rst(rst)	
+		.rst(rst),
+    .D(D),
+    .o(o)
 	);
 
 endmodule

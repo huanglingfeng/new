@@ -4,7 +4,7 @@ module openmips(
 
 	input	logic										clk,
 	input logic										rst,
-	
+	output logic[`RegBus] out,
  
 	input logic[`RegBus]           rom_data_i,
 	output logic[`RegBus]           rom_addr_o,
@@ -19,7 +19,7 @@ module openmips(
 	output logic[3:0]               ram_ce_o
 	
 );
-
+	
 	logic[`InstAddrBus] pc;
 	logic[`InstAddrBus] id_pc_i;
 	logic[`InstBus] id_inst_i;
@@ -122,7 +122,7 @@ module openmips(
 	logic[5:0] stall;
 	logic stallreq_from_id;	
 	logic stallreq_from_ex;
-  
+    assign out=wb_wdata_i;
   //pc_regÀý»¯
 	pc_reg pc_reg0(
 		.clk(clk),
