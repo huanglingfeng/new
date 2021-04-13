@@ -4,11 +4,13 @@ module openmips(
 
 	input	logic										clk,
 	input logic										rst,
-	output Reg_t out,
+	
  
 	input Reg_t           rom_data_i,
 	output Reg_t           rom_addr_o,
-	output logic                    rom_ce_o
+	output logic                    rom_ce_o,
+
+	output Reg_t wb_wdata_i
 	
 );
 
@@ -59,7 +61,7 @@ module openmips(
 	//连接MEM/WB模块的输出与回写阶段的输入	
 	logic wb_wreg_i;
 	RegAddr_t wb_wd_i;
-	Reg_t wb_wdata_i;
+	//Reg_t wb_wdata_i;
 	Reg_t wb_hi_i;
 	Reg_t wb_lo_i;
 	logic wb_whilo_i;	
@@ -94,7 +96,7 @@ module openmips(
 	logic[5:0] stall;
 	logic stallreq_from_id;	
 	logic stallreq_from_ex;
-    assign out=wb_wdata_i;
+  
   //pc_reg例化
 	pc_reg pc_reg0(
 		.clk(clk),

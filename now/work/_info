@@ -1,0 +1,82 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dF:/VSC/logisim/proj
+Xdefines_svh_unit
+Z0 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+!s110 1617115374
+!i10b 1
+!s100 _HH9YVg084[<ENo>MoW6[1
+IN_1<@E8=hI?glM7Je^P=[0
+VN_1<@E8=hI?glM7Je^P=[0
+!i103 1
+S1
+Z1 dF:/VSC/Verilog/openmips_t/now
+w1617115331
+8F:/VSC/Verilog/openmips_t/now/defines.svh
+FF:/VSC/Verilog/openmips_t/now/defines.svh
+L0 1
+Z2 OL;L;10.5;63
+r1
+!s85 0
+31
+!s108 1617115374.000000
+!s107 F:/VSC/Verilog/openmips_t/now/defines.svh|
+!s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|F:/VSC/Verilog/openmips_t/now/defines.svh|
+!i113 0
+Z3 o-work work -sv -L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+Z4 tCvgOpt 0
+vpc
+R0
+DXx4 work 10 pc_sv_unit 0 22 [d@bSzDT7BdT@Qll^OS?Z0
+VDg1SIo80bB@j0V0VzS_@n1
+r1
+!s85 0
+31
+!i10b 1
+!s100 IW]g3^e29H@ViJeZniXVS3
+IoGf_dKI>kh]NHO1B3HLS21
+!s105 pc_sv_unit
+S1
+R1
+Z5 w1617115400
+Z6 8F:\VSC\Verilog\openmips_t\now\pc.sv
+Z7 FF:\VSC\Verilog\openmips_t\now\pc.sv
+L0 2
+R2
+Z8 !s108 1617115407.000000
+Z9 !s107 defines.svh|F:\VSC\Verilog\openmips_t\now\pc.sv|
+Z10 !s90 -reportprogress|300|-work|work|-vopt|-sv|-stats=none|F:\VSC\Verilog\openmips_t\now\pc.sv|
+!i113 0
+R3
+R4
+Xpc_sv_unit
+R0
+V[d@bSzDT7BdT@Qll^OS?Z0
+r1
+!s85 0
+31
+!i10b 1
+!s100 IKSebggXKI4Z8f;bFli=@2
+I[d@bSzDT7BdT@Qll^OS?Z0
+!i103 1
+S1
+R1
+R5
+R6
+R7
+Fdefines.svh
+L0 1
+R2
+R8
+R9
+R10
+!i113 0
+R3
+R4

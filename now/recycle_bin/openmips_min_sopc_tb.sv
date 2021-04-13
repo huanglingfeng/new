@@ -5,8 +5,7 @@ module openmips_min_sopc_tb();
 
   logic     CLOCK_50;
   logic     rst;
-  logic [7:0] D;
-  logic [7:0] o;
+  
        
   initial begin
     CLOCK_50 = 1'b0;
