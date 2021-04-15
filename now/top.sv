@@ -15,7 +15,7 @@ module top(
     logic [63:0] led_anode_out;
     Inst_t inst;
     
-    InstAddr_t inst_addr;
+    InstAddr_t inst_addr;  
     logic rom_ce;
     Reg_t wb_wdata;
     inst_rom inst_rom0(
